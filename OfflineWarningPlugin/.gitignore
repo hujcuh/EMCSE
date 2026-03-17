@@ -1,0 +1,32 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+*.vcxproj.user
+
+# Build output
+x64/
+Debug/
+Release/
+build/
+out/
+bin/
+obj/
+deploy/
+
+# Qt generated
+GeneratedFiles/
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+
+# Runtime / deployment artifacts
+*.pdb
+*.ilk
+
+# Optional: if you have copied runtime plugin DLLs into a local test folder
+plugins/*.dll
+plugins/*.json
+plugins/*.config.json
