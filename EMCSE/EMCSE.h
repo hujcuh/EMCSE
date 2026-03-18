@@ -29,8 +29,9 @@ private slots:
     void onTownQueryFinished(bool ok, const QJsonArray& result, const QString& error);
     void onNationQueryFinished(bool ok, const QJsonArray& result, const QString& error);
 
-    // Nation resident batch callback
+    // Nation -> Towns -> MayorPlayers pipeline
     void onPlayersBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error);
+    void onTownsBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error);
 
 private:
     void appendLog(const QString& text);
@@ -40,7 +41,6 @@ private:
     QString formatJsonValue(const QString& key, const QJsonValue& value) const;
     bool isTimestampKey(const QString& key) const;
     QString formatTimestamp(const QJsonValue& value) const;
-
     bool isPermissionArrayKey(const QString& key) const;
     QString permissionLabelForIndex(int index) const;
     bool isBoolArray(const QJsonArray& arr) const;
@@ -61,11 +61,14 @@ private:
     QComboBox* m_comboType = nullptr;
     QLineEdit* m_editQuery = nullptr;
     QPushButton* m_btnSearch = nullptr;
-
     QTreeWidget* m_resultTree = nullptr;
 
-    // Nation batch analysis state
+    // Nation mayor analysis state
     QJsonArray m_pendingNationResult;
     QString m_pendingNationQueryText;
-    bool m_waitingNationBatch = false;
+
+    QJsonArray m_pendingNationTownDetails;
+
+    bool m_waitingNationTownBatch = false;
+    bool m_waitingNationMayorPlayersBatch = false;
 };

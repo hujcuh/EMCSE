@@ -1,0 +1,429 @@
+<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" FontFamily="Segoe UI" FontSize="12">
+  <FlowDocument.Tag><![CDATA[{
+  "timestamp": "2026-03-18 13:26:12",
+  "files": {
+    "E:\\C\\MayorCheckPlugin\\MayorCheckPlugin\\MayorCheckPlugin.vcxproj": {
+      "before": "7VlRT9tIEO7zSfcXTpHFKfBAnBBK08NxRR2aRg0QEQJ30kloY28SF9trrdeUtL3/frP27jp2nJYclJ5Q+oCa9czs+NuZb2bWnd9evDDe3Ple5RbTyCVBW2vU6loFBzZx3GDa1mI22W1pb8xffzEGlHzENqt08ATFHrtAdIpZ1Nbexq7naBWwEsCvGWPhH7oe2TPso6jmuzYlEZmwmk183cG32CMhprofjbmavlevNzWwXqkYPYb9LiVxWOmjMfbamtjQIsHEncYUMXAwSoVBvOxppRfYXuzgttbB43j69coNmntSA3RypsxExtDzi9wV/s8YeIhNCPXNxIihq9+pBCykeJSpf8e5c+xhFOHvuCekfoaDKXp3B/sPxQ5M/BDkvuXavXFb0zlDVxGaBiwEAIQym+eCtuuRMfKyML20RJxcphlmNl7V6oa+tCyi6gOefyLUSYOOaxq6XBISwlw3dh3zC54ctFrNurP7urVf391vNRq7rw/2Wrste7/56qXdmrzca/yjQjXREWbOCWGnyMdRiGxsnqA5odYM2zcDL566gaHnnwslSAWHfIrS1JcJoV6szl/smyLcTOJNhpvIfT8klFXEu7W1re1LSxDMALHZzt8nikesMKwJCqqFcAKRVtHLzgPy0nE5ZbS16tZ2Lkt3vm5tS+93qu12dYEtqpqkn5yKTIQ8hVzMQ2x25gECmuu7Y4rovJCuiYRAbxThZKNU0sWRyWiMDX15XShIHy8I8SLMzNvGfjNLJ7kqhK0ZoshmmA5BchS4wOBgO7e6En7APTuRyjrI5ajsSbGbQJY9GnhXM+JhQGFKkX8WMtd3PyflRpzQysc/FXvF0k+K+/OJWeD/J0XuuURsbz2yzpN0qpwrmcd3DAe8+wTmYtB1iuIJ9TbZKJFdLBM55SHQHnZSer6fhiS74QxD/6qtRXe5QpH4BAVtGQ9gdMoLaMelxdK1UHlqMYjJGrZAuvjOjVi0DVVrbTvVHVW++sRG3lEYdhBDspCoUnkvaB8CVKEubKBSE8yK5iMhow1Mq2GSEfX8gJJ5luM1nvoniA/PKmn5+AGdrxskbW0qvUAb63W5MtQszyJ+6HpYLACfXSEaAA33+bBuJn+h68wtpm0PiA47/WRqEH2S+qkEBhQD/9s4igjNfI/Mq95pc+/wunP8dtQ9PDn66+zcen9sfRj0R93e6fXxn4Oz84vh4TWIdc6u4D+j4Xmn3z/8fXuFwR0+VpRvpXzhDT0M9Ciw8Qk0x8Ln4qoSB3twZ8Ghcd5j5GBqwpkk2xSWV2u847iG9qw2K9FLHqa60KcXjsHou8FNdiTDeDycR3D+fDDkI5ihZ0tq/y4OMFyTpFNGL31ZPgGJN135WBk4DtDYw6MjyxS9SrYgHVV+peNwdqaLZfqBgSpTPbl5qWajVwGj9UL1XRzYHIwkoPlbQIgLYEofKVB6AaMu9Ce2FJNzW8kDpaQyIW2X1U8lsCpa08Q43SRGcg+3SQzZui3cU+QqYJE41ksKFZfrhumGuSUhFg9gw9xws/2IISpZ93/O2xvGfrYJkXU2QK6WJ74xZd+aJnBpiOHW/qY2k716uWDSCUqRpc8J+a8LiQXRmmdbOZ7nIzeo2WEo7ZQL8q24UNZCLrWz/+HiI01ri2JoMks62sfdTHZ/P3y7Yrv5ZBveD85iD7QcOOvdx7H0w62MH3F9lRs+1Y2c+AZTfr3GIyD5JGz+Cw==",
+      "after": "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"
+    }
+  }
+}]]></FlowDocument.Tag>
+  <Section Margin="0,24" TextAlignment="Center">
+    <Paragraph FontSize="24" FontWeight="Bold" Margin="12,0">
+      <LineBreak />
+      <Span Foreground="Gray">Qt Visual Studio Tools</Span>
+    </Paragraph>
+    <Paragraph FontSize="42" Margin="12,0" FontWeight="Bold">
+      <Span TextDecorations="Underline">Project Format Conversion</Span>
+    </Paragraph>
+    <Paragraph Margin="12,8" FontSize="18">
+      <Span>Report generated on 2026-03-18 13:26:12</Span>
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Files</Span>
+    </Paragraph>
+    <Paragraph Margin="24,12,0,0">
+      <Span FontFamily="Consolas" FontSize="14" Background="WhiteSmoke"><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+      <LineBreak />
+      <Hyperlink NavigateUri="file://E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj?before">[Before]</Hyperlink>
+      <Hyperlink NavigateUri="file://E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj?after">[After]</Hyperlink>
+      <Hyperlink NavigateUri="file://E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj?diff&amp;before&amp;after">
+                        [Diff before/after]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj?diff&amp;before&amp;current">
+                        [Diff before/current]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj?diff&amp;after&amp;current">
+                        [Diff after/current]
+                    </Hyperlink>
+      <LineBreak />
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Changes</Span>
+    </Paragraph>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Enabling multi-processor compilation]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Project format version]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Keyword>QtVS_v304</Keyword>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Fallback for QTMSBUILD environment variable]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Default Qt properties]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt build settings]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Warn if Qt/MSBuild is not found]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  </Target>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt property sheet]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt targets]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[E:\C\MayorCheckPlugin\MayorCheckPlugin\MayorCheckPlugin.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+  </Section>
+  <Section>
+    <Paragraph />
+  </Section>
+</FlowDocument>
+<!--QmTRMUULR2D9s436BpyPFLrmyjrLcyTcK80sqHPTgSA=-->

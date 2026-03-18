@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "EMCSE.h"
-
 #include "DatabaseManager.h"
 #include "EarthMcApiClient.h"
 #include "PluginManager.h"
@@ -10,7 +9,6 @@
 #include <QDateTime>
 #include <QSqlDatabase>
 #include <QDebug>
-
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QSizePolicy>
@@ -18,15 +16,15 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QWidget>
-
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QHeaderView>
-
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QSet>
+#include <QFont>
 
 EMCSE::EMCSE(QWidget* parent)
     : QMainWindow(parent)
@@ -69,7 +67,6 @@ EMCSE::EMCSE(QWidget* parent)
     m_resultTree->header()->setStretchLastSection(true);
     m_resultTree->setRootIsDecorated(true);
     m_resultTree->setAlternatingRowColors(true);
-
     layout->addWidget(m_resultTree, 1);
 
     // Log box
@@ -80,6 +77,18 @@ EMCSE::EMCSE(QWidget* parent)
     m_resultTree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui.textLog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     ui.textLog->setMaximumHeight(180);
+
+    // 强制使用支持中文的字体，避免日志中的中文显示为方框
+    QFont logFont;
+    logFont.setFamilies(QStringList()
+        << "Microsoft YaHei UI"
+        << "Microsoft YaHei"
+        << "SimSun"
+        << "Segoe UI");
+    logFont.setPointSize(10);
+
+    ui.textLog->setFont(logFont);
+    m_resultTree->setFont(logFont);
 
     // Services
     m_dbManager = new DatabaseManager(this);
@@ -111,13 +120,16 @@ EMCSE::EMCSE(QWidget* parent)
     // Plugin loading
     QString pluginDir = QCoreApplication::applicationDirPath() + "/plugins";
     QDir().mkpath(pluginDir);
+
     appendLog("Plugin directory: " + pluginDir);
     m_pluginManager->loadPlugins(pluginDir);
     appendLog(QString("Plugin count: %1").arg(m_pluginManager->pluginCount()));
 
+    // UI connections
     connect(m_btnSearch, &QPushButton::clicked,
         this, &EMCSE::onSearchClicked);
 
+    // API result connections
     connect(m_apiClient, &EarthMcApiClient::playerQueryFinished,
         this, &EMCSE::onPlayerQueryFinished);
 
@@ -127,9 +139,11 @@ EMCSE::EMCSE(QWidget* parent)
     connect(m_apiClient, &EarthMcApiClient::nationQueryFinished,
         this, &EMCSE::onNationQueryFinished);
 
-    // Nation resident batch callback
     connect(m_apiClient, &EarthMcApiClient::playersBatchQueryFinished,
         this, &EMCSE::onPlayersBatchQueryFinished);
+
+    connect(m_apiClient, &EarthMcApiClient::townsBatchQueryFinished,
+        this, &EMCSE::onTownsBatchQueryFinished);
 }
 
 EMCSE::~EMCSE()
@@ -139,7 +153,6 @@ EMCSE::~EMCSE()
 void EMCSE::onSearchClicked()
 {
     QString input = m_editQuery->text().trimmed();
-
     if (input.isEmpty()) {
         appendLog("Query is empty");
         return;
@@ -148,10 +161,12 @@ void EMCSE::onSearchClicked()
     m_btnSearch->setEnabled(false);
     m_resultTree->clear();
 
-    // Reset nation batch state
-    m_waitingNationBatch = false;
+    // Reset nation mayor pipeline state
+    m_waitingNationTownBatch = false;
+    m_waitingNationMayorPlayersBatch = false;
     m_pendingNationResult = QJsonArray();
     m_pendingNationQueryText.clear();
+    m_pendingNationTownDetails = QJsonArray();
 
     QString currentType = m_comboType->currentText();
 
@@ -215,9 +230,8 @@ void EMCSE::onTownQueryFinished(bool ok, const QJsonArray& result, const QString
 
 void EMCSE::onNationQueryFinished(bool ok, const QJsonArray& result, const QString& error)
 {
-    m_btnSearch->setEnabled(true);
-
     if (!ok) {
+        m_btnSearch->setEnabled(true);
         appendLog("Nation query failed: " + error);
         return;
     }
@@ -226,64 +240,134 @@ void EMCSE::onNationQueryFinished(bool ok, const QJsonArray& result, const QStri
     showJsonArrayInTree(result);
 
     if (result.isEmpty() || !result.at(0).isObject()) {
+        m_btnSearch->setEnabled(true);
         appendLog("Nation result is empty or invalid.");
         return;
     }
 
     QJsonObject nation = result.at(0).toObject();
-    if (!nation.contains("residents") || !nation.value("residents").isArray()) {
-        appendLog("Nation has no residents array.");
+    if (!nation.contains("towns") || !nation.value("towns").isArray()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("Nation has no towns array.");
         return;
     }
 
-    QJsonArray residents = nation.value("residents").toArray();
-    QStringList residentUuids;
+    QJsonArray towns = nation.value("towns").toArray();
+    QStringList townIds;
 
-    for (const QJsonValue& v : residents) {
+    for (const QJsonValue& v : towns) {
         if (!v.isObject()) {
             continue;
         }
 
-        QJsonObject residentObj = v.toObject();
-        QString uuid = residentObj.value("uuid").toString();
-        if (!uuid.isEmpty()) {
-            residentUuids.append(uuid);
+        QJsonObject townObj = v.toObject();
+
+        // 优先用 uuid，拿不到再退回 name
+        QString id = townObj.value("uuid").toString();
+        if (id.isEmpty()) {
+            id = townObj.value("name").toString();
+        }
+
+        if (!id.isEmpty()) {
+            townIds.append(id);
         }
     }
 
-    appendLog(QString("Nation residents to batch query: %1").arg(residentUuids.size()));
+    appendLog(QString("Nation towns to batch query: %1").arg(townIds.size()));
 
-    if (residentUuids.isEmpty()) {
-        appendLog("No resident UUIDs found in nation.");
+    if (townIds.isEmpty()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("No town IDs found in nation.");
         return;
     }
 
     m_pendingNationResult = result;
     m_pendingNationQueryText = m_editQuery->text().trimmed();
-    m_waitingNationBatch = true;
+    m_waitingNationTownBatch = true;
 
-    m_apiClient->queryPlayersBatch(residentUuids);
+    QJsonObject templ;
+    templ["name"] = true;
+    templ["mayor"] = true;
+    templ["nation"] = true;
+
+    m_apiClient->queryTownsBatch(townIds, templ);
+}
+
+void EMCSE::onTownsBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error)
+{
+    // 这里只处理 Nation -> Towns 的 mayor 流程
+    if (!m_waitingNationTownBatch) {
+        appendLog("Received towns batch result, but no nation town batch was pending.");
+        return;
+    }
+
+    m_waitingNationTownBatch = false;
+
+    if (!ok) {
+        m_btnSearch->setEnabled(true);
+        appendLog("Nation town batch query failed: " + error);
+        return;
+    }
+
+    appendLog(QString("Nation town batch query success, result count = %1").arg(result.size()));
+
+    m_pendingNationTownDetails = result;
+
+    QSet<QString> mayorSet;
+    QStringList mayorUuids;
+
+    for (const QJsonValue& v : result) {
+        if (!v.isObject()) {
+            continue;
+        }
+
+        QJsonObject townObj = v.toObject();
+        if (!townObj.contains("mayor") || !townObj.value("mayor").isObject()) {
+            continue;
+        }
+
+        QJsonObject mayorObj = townObj.value("mayor").toObject();
+        QString mayorUuid = mayorObj.value("uuid").toString();
+
+        if (!mayorUuid.isEmpty() && !mayorSet.contains(mayorUuid)) {
+            mayorSet.insert(mayorUuid);
+            mayorUuids.append(mayorUuid);
+        }
+    }
+
+    appendLog(QString("Nation mayor UUIDs to batch query: %1").arg(mayorUuids.size()));
+
+    if (mayorUuids.isEmpty()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("No mayor UUIDs found in nation towns.");
+        return;
+    }
+
+    m_waitingNationMayorPlayersBatch = true;
+    m_apiClient->queryPlayersBatch(mayorUuids);
 }
 
 void EMCSE::onPlayersBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error)
 {
-    if (!m_waitingNationBatch) {
-        appendLog("Received players batch result, but no nation batch was pending.");
+    if (!m_waitingNationMayorPlayersBatch) {
+        appendLog("Received players batch result, but no nation mayor batch was pending.");
         return;
     }
 
-    m_waitingNationBatch = false;
+    m_waitingNationMayorPlayersBatch = false;
+    m_btnSearch->setEnabled(true);
 
     if (!ok) {
-        appendLog("Nation resident batch query failed: " + error);
+        appendLog("Nation mayor players batch query failed: " + error);
         return;
     }
 
-    appendLog(QString("Nation resident batch query success, result count = %1").arg(result.size()));
+    appendLog(QString("Nation mayor players batch query success, result count = %1").arg(result.size()));
 
     if (m_pluginManager) {
         QJsonObject extras;
-        extras["nationPlayers"] = result;
+        extras["nationTowns"] = m_pendingNationTownDetails;
+        extras["nationMayorPlayers"] = result;
 
         QJsonArray warnings = m_pluginManager->runPlugins(
             "nation",
@@ -297,6 +381,7 @@ void EMCSE::onPlayersBatchQueryFinished(bool ok, const QJsonArray& result, const
 
     m_pendingNationResult = QJsonArray();
     m_pendingNationQueryText.clear();
+    m_pendingNationTownDetails = QJsonArray();
 }
 
 void EMCSE::showPluginWarnings(const QJsonArray& warnings)
@@ -327,21 +412,19 @@ void EMCSE::showPluginWarnings(const QJsonArray& warnings)
             .arg(message)
         );
 
-        // If plugin returned expired member ids, list them in log
         if (obj.contains("ids") && obj.value("ids").isArray()) {
             QJsonArray ids = obj.value("ids").toArray();
             appendLog(QString("Expired member UUIDs (%1):").arg(ids.size()));
             for (const QJsonValue& idVal : ids) {
-                appendLog("  - " + idVal.toString());
+                appendLog(" - " + idVal.toString());
             }
         }
 
-        // Optional: also list names if plugin returned them
         if (obj.contains("names") && obj.value("names").isArray()) {
             QJsonArray names = obj.value("names").toArray();
             appendLog(QString("Expired member names (%1):").arg(names.size()));
             for (const QJsonValue& nameVal : names) {
-                appendLog("  - " + nameVal.toString());
+                appendLog(" - " + nameVal.toString());
             }
         }
     }
@@ -476,7 +559,6 @@ void EMCSE::showJsonArrayInTree(const QJsonArray& arr)
         rootItem->setText(0, QString("[%1]").arg(i));
 
         QJsonValue value = arr.at(i);
-
         if (value.isObject()) {
             QJsonObject obj = value.toObject();
             rootItem->setText(1, obj.isEmpty() ? "{}" : "");
@@ -498,7 +580,6 @@ void EMCSE::showJsonArrayInTree(const QJsonArray& arr)
 void EMCSE::addJsonObjectToTree(QTreeWidgetItem* parentItem, const QJsonObject& obj)
 {
     const QStringList keys = obj.keys();
-
     for (const QString& key : keys) {
         addJsonValueToTree(parentItem, key, obj.value(key));
     }

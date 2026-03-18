@@ -38,18 +38,36 @@ void EarthMcApiClient::queryPlayersBatch(const QStringList& uuids)
     for (const QString& id : uuids) {
         arr.append(id);
     }
-
     postQueryArray("players", arr, "playersBatch");
 }
 
-void EarthMcApiClient::postQuery(const QString& endpoint, const QString& queryItem, const QString& queryType)
+void EarthMcApiClient::queryTownsBatch(
+    const QStringList& townIdsOrNames,
+    const QJsonObject& templ)
+{
+    QJsonArray arr;
+    for (const QString& idOrName : townIdsOrNames) {
+        arr.append(idOrName);
+    }
+
+    postQueryArray("towns", arr, "townsBatch", templ);
+}
+
+void EarthMcApiClient::postQuery(
+    const QString& endpoint,
+    const QString& queryItem,
+    const QString& queryType)
 {
     QJsonArray arr;
     arr.append(queryItem);
     postQueryArray(endpoint, arr, queryType);
 }
 
-void EarthMcApiClient::postQueryArray(const QString& endpoint, const QJsonArray& queryItems, const QString& queryType)
+void EarthMcApiClient::postQueryArray(
+    const QString& endpoint,
+    const QJsonArray& queryItems,
+    const QString& queryType,
+    const QJsonObject& templ)
 {
     QUrl url(BASE_URL + "/" + endpoint);
     QNetworkRequest request(url);
@@ -57,6 +75,11 @@ void EarthMcApiClient::postQueryArray(const QString& endpoint, const QJsonArray&
 
     QJsonObject bodyObj;
     bodyObj["query"] = queryItems;
+
+    // Optional template: EarthMC API supports selecting top-level fields
+    if (!templ.isEmpty()) {
+        bodyObj["template"] = templ;
+    }
 
     QByteArray body = QJsonDocument(bodyObj).toJson(QJsonDocument::Compact);
 
@@ -82,6 +105,9 @@ void EarthMcApiClient::onReplyFinished(QNetworkReply* reply)
         else if (queryType == "playersBatch") {
             emit playersBatchQueryFinished(false, QJsonArray(), reply->errorString());
         }
+        else if (queryType == "townsBatch") {
+            emit townsBatchQueryFinished(false, QJsonArray(), reply->errorString());
+        }
 
         reply->deleteLater();
         return;
@@ -105,6 +131,9 @@ void EarthMcApiClient::onReplyFinished(QNetworkReply* reply)
         else if (queryType == "playersBatch") {
             emit playersBatchQueryFinished(false, QJsonArray(), err);
         }
+        else if (queryType == "townsBatch") {
+            emit townsBatchQueryFinished(false, QJsonArray(), err);
+        }
 
         reply->deleteLater();
         return;
@@ -121,6 +150,9 @@ void EarthMcApiClient::onReplyFinished(QNetworkReply* reply)
     }
     else if (queryType == "playersBatch") {
         emit playersBatchQueryFinished(true, doc.array(), QString());
+    }
+    else if (queryType == "townsBatch") {
+        emit townsBatchQueryFinished(true, doc.array(), QString());
     }
 
     reply->deleteLater();
