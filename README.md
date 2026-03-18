@@ -28,6 +28,7 @@ Use `windeployqt` to deploy the `Release` build on Windows
 ## Roadmap
 [] Cross-platform adaptation: Linux, Android, macOS  
 [] EMCSE server-side  
+[] Town Ruins Status Forecast
 
 ---
 
@@ -60,4 +61,5 @@ Windows 下使用 `windeployqt` 部署 `Release` 版
 
 ## 计划
 [] Linux、Android、macOS 跨平台适配  
-[] EMCSE 服务端  
+[] EMCSE 服务端 
+[] 城镇废墟全局搜索预报 

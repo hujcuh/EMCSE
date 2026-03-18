@@ -12,11 +12,13 @@ class OfflineWarningPlugin : public QObject, public IAnalysisPlugin
 public:
     QString pluginId() const override { return "offline-warning"; }
     QString displayName() const override { return "Offline Warning Plugin"; }
-    QString version() const override { return "1.2.0"; }
+    QString version() const override { return "1.3.0"; }
 
     bool supports(const QString& targetType) const override
     {
-        return targetType == "player" || targetType == "nation";
+        // 只处理 player 和 town
+        return targetType == "player"
+            || targetType == "town";
     }
 
     QJsonArray analyze(const QJsonObject& context) override;

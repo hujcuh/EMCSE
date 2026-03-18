@@ -161,7 +161,12 @@ void EMCSE::onSearchClicked()
     m_btnSearch->setEnabled(false);
     m_resultTree->clear();
 
-    // Reset nation mayor pipeline state
+    // Reset Town state
+    m_waitingTownMayorBatch = false;
+    m_pendingTownResult = QJsonArray();
+    m_pendingTownQueryText.clear();
+
+    // Reset Nation state
     m_waitingNationTownBatch = false;
     m_waitingNationMayorPlayersBatch = false;
     m_pendingNationResult = QJsonArray();
@@ -208,9 +213,8 @@ void EMCSE::onPlayerQueryFinished(bool ok, const QJsonArray& result, const QStri
 
 void EMCSE::onTownQueryFinished(bool ok, const QJsonArray& result, const QString& error)
 {
-    m_btnSearch->setEnabled(true);
-
     if (!ok) {
+        m_btnSearch->setEnabled(true);
         appendLog("Town query failed: " + error);
         return;
     }
@@ -218,14 +222,61 @@ void EMCSE::onTownQueryFinished(bool ok, const QJsonArray& result, const QString
     appendLog(QString("Town query success, result count = %1").arg(result.size()));
     showJsonArrayInTree(result);
 
-    if (m_pluginManager) {
-        QJsonArray warnings = m_pluginManager->runPlugins(
-            "town",
-            m_editQuery->text().trimmed(),
-            result
-        );
-        showPluginWarnings(warnings);
+    if (result.isEmpty() || !result.at(0).isObject()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("Town result is empty or invalid.");
+
+        if (m_pluginManager) {
+            QJsonArray warnings = m_pluginManager->runPlugins(
+                "town",
+                m_editQuery->text().trimmed(),
+                result
+            );
+            showPluginWarnings(warnings);
+        }
+        return;
     }
+
+    QJsonObject town = result.at(0).toObject();
+    if (!town.contains("mayor") || !town.value("mayor").isObject()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("Town has no mayor object.");
+
+        if (m_pluginManager) {
+            QJsonArray warnings = m_pluginManager->runPlugins(
+                "town",
+                m_editQuery->text().trimmed(),
+                result
+            );
+            showPluginWarnings(warnings);
+        }
+        return;
+    }
+
+    QJsonObject mayorObj = town.value("mayor").toObject();
+    QString mayorUuid = mayorObj.value("uuid").toString();
+
+    if (mayorUuid.isEmpty()) {
+        m_btnSearch->setEnabled(true);
+        appendLog("Town mayor UUID is empty.");
+
+        if (m_pluginManager) {
+            QJsonArray warnings = m_pluginManager->runPlugins(
+                "town",
+                m_editQuery->text().trimmed(),
+                result
+            );
+            showPluginWarnings(warnings);
+        }
+        return;
+    }
+
+    m_pendingTownResult = result;
+    m_pendingTownQueryText = m_editQuery->text().trimmed();
+    m_waitingTownMayorBatch = true;
+
+    appendLog("Town mayor UUID to batch query: " + mayorUuid);
+    m_apiClient->queryPlayersBatch(QStringList() << mayorUuid);
 }
 
 void EMCSE::onNationQueryFinished(bool ok, const QJsonArray& result, const QString& error)
@@ -295,7 +346,6 @@ void EMCSE::onNationQueryFinished(bool ok, const QJsonArray& result, const QStri
 
 void EMCSE::onTownsBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error)
 {
-    // 这里只处理 Nation -> Towns 的 mayor 流程
     if (!m_waitingNationTownBatch) {
         appendLog("Received towns batch result, but no nation town batch was pending.");
         return;
@@ -349,39 +399,88 @@ void EMCSE::onTownsBatchQueryFinished(bool ok, const QJsonArray& result, const Q
 
 void EMCSE::onPlayersBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error)
 {
-    if (!m_waitingNationMayorPlayersBatch) {
-        appendLog("Received players batch result, but no nation mayor batch was pending.");
-        return;
-    }
+    // --------------------------
+    // Town mayor player flow
+    // --------------------------
+    if (m_waitingTownMayorBatch) {
+        m_waitingTownMayorBatch = false;
+        m_btnSearch->setEnabled(true);
 
-    m_waitingNationMayorPlayersBatch = false;
-    m_btnSearch->setEnabled(true);
+        if (!ok) {
+            appendLog("Town mayor player batch query failed: " + error);
 
-    if (!ok) {
-        appendLog("Nation mayor players batch query failed: " + error);
-        return;
-    }
+            if (m_pluginManager) {
+                QJsonArray warnings = m_pluginManager->runPlugins(
+                    "town",
+                    m_pendingTownQueryText,
+                    m_pendingTownResult
+                );
+                showPluginWarnings(warnings);
+            }
 
-    appendLog(QString("Nation mayor players batch query success, result count = %1").arg(result.size()));
+            m_pendingTownResult = QJsonArray();
+            m_pendingTownQueryText.clear();
+            return;
+        }
 
-    if (m_pluginManager) {
+        appendLog(QString("Town mayor player batch query success, result count = %1").arg(result.size()));
+
         QJsonObject extras;
-        extras["nationTowns"] = m_pendingNationTownDetails;
-        extras["nationMayorPlayers"] = result;
+        if (!result.isEmpty() && result.at(0).isObject()) {
+            extras["townMayorPlayer"] = result.at(0).toObject();
+        }
 
-        QJsonArray warnings = m_pluginManager->runPlugins(
-            "nation",
-            m_pendingNationQueryText,
-            m_pendingNationResult,
-            extras
-        );
+        if (m_pluginManager) {
+            QJsonArray warnings = m_pluginManager->runPlugins(
+                "town",
+                m_pendingTownQueryText,
+                m_pendingTownResult,
+                extras
+            );
+            showPluginWarnings(warnings);
+        }
 
-        showPluginWarnings(warnings);
+        m_pendingTownResult = QJsonArray();
+        m_pendingTownQueryText.clear();
+        return;
     }
 
-    m_pendingNationResult = QJsonArray();
-    m_pendingNationQueryText.clear();
-    m_pendingNationTownDetails = QJsonArray();
+    // --------------------------
+    // Nation mayor players flow
+    // --------------------------
+    if (m_waitingNationMayorPlayersBatch) {
+        m_waitingNationMayorPlayersBatch = false;
+        m_btnSearch->setEnabled(true);
+
+        if (!ok) {
+            appendLog("Nation mayor players batch query failed: " + error);
+            return;
+        }
+
+        appendLog(QString("Nation mayor players batch query success, result count = %1").arg(result.size()));
+
+        if (m_pluginManager) {
+            QJsonObject extras;
+            extras["nationTowns"] = m_pendingNationTownDetails;
+            extras["nationMayorPlayers"] = result;
+
+            QJsonArray warnings = m_pluginManager->runPlugins(
+                "nation",
+                m_pendingNationQueryText,
+                m_pendingNationResult,
+                extras
+            );
+
+            showPluginWarnings(warnings);
+        }
+
+        m_pendingNationResult = QJsonArray();
+        m_pendingNationQueryText.clear();
+        m_pendingNationTownDetails = QJsonArray();
+        return;
+    }
+
+    appendLog("Received players batch result, but no town/nation batch was pending.");
 }
 
 void EMCSE::showPluginWarnings(const QJsonArray& warnings)

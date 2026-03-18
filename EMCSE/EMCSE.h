@@ -29,8 +29,10 @@ private slots:
     void onTownQueryFinished(bool ok, const QJsonArray& result, const QString& error);
     void onNationQueryFinished(bool ok, const QJsonArray& result, const QString& error);
 
-    // Nation -> Towns -> MayorPlayers pipeline
+    // Shared batch callback for both Town-mayor and Nation-mayors
     void onPlayersBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error);
+
+    // Nation -> Towns -> MayorPlayers pipeline
     void onTownsBatchQueryFinished(bool ok, const QJsonArray& result, const QString& error);
 
 private:
@@ -63,10 +65,18 @@ private:
     QPushButton* m_btnSearch = nullptr;
     QTreeWidget* m_resultTree = nullptr;
 
+    // -------------------------
+    // Town mayor analysis state
+    // -------------------------
+    QJsonArray m_pendingTownResult;
+    QString m_pendingTownQueryText;
+    bool m_waitingTownMayorBatch = false;
+
+    // -------------------------
     // Nation mayor analysis state
+    // -------------------------
     QJsonArray m_pendingNationResult;
     QString m_pendingNationQueryText;
-
     QJsonArray m_pendingNationTownDetails;
 
     bool m_waitingNationTownBatch = false;

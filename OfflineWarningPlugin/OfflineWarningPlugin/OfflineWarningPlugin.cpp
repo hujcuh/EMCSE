@@ -4,7 +4,6 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QFile>
-#include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -47,7 +46,6 @@ int OfflineWarningPlugin::loadOfflineThresholdDays() const
 QJsonArray OfflineWarningPlugin::analyze(const QJsonObject& context)
 {
     QJsonArray warnings;
-
     QString targetType = context.value("targetType").toString();
     int thresholdDays = loadOfflineThresholdDays();
 
@@ -92,53 +90,64 @@ QJsonArray OfflineWarningPlugin::analyze(const QJsonObject& context)
     }
 
     // --------------------------
-    // Nation analysis
+    // Town analysis
+    // Requires host extras["townMayorPlayer"]
     // --------------------------
-    if (targetType == "nation") {
-        QJsonObject extras = context.value("extras").toObject();
-        QJsonArray nationPlayers = extras.value("nationPlayers").toArray();
-
-        if (nationPlayers.isEmpty()) {
+    if (targetType == "town") {
+        QJsonArray rawResult = context.value("rawResult").toArray();
+        if (rawResult.isEmpty() || !rawResult.at(0).isObject()) {
             return warnings;
         }
 
-        QJsonArray expiredIds;
-        QJsonArray expiredNames;
-        qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
+        QJsonObject town = rawResult.at(0).toObject();
+        QString townName = town.value("name").toString();
 
-        for (const QJsonValue& v : nationPlayers) {
-            if (!v.isObject()) {
-                continue;
-            }
-
-            QJsonObject player = v.toObject();
-            if (!player.contains("timestamps") || !player.value("timestamps").isObject()) {
-                continue;
-            }
-
-            QJsonObject timestamps = player.value("timestamps").toObject();
-            if (!timestamps.contains("lastOnline") || !timestamps.value("lastOnline").isDouble()) {
-                continue;
-            }
-
-            qint64 lastOnlineMs = static_cast<qint64>(timestamps.value("lastOnline").toDouble());
-            qint64 days = (nowMs - lastOnlineMs) / (1000LL * 60 * 60 * 24);
-
-            if (days >= thresholdDays) {
-                expiredIds.append(player.value("uuid").toString());
-                expiredNames.append(player.value("name").toString());
-            }
+        if (!town.contains("mayor") || !town.value("mayor").isObject()) {
+            return warnings;
         }
 
-        if (!expiredIds.isEmpty()) {
+        QJsonObject mayorObj = town.value("mayor").toObject();
+        QString mayorName = mayorObj.value("name").toString();
+        QString mayorUuid = mayorObj.value("uuid").toString();
+
+        QJsonObject extras = context.value("extras").toObject();
+        if (!extras.contains("townMayorPlayer") || !extras.value("townMayorPlayer").isObject()) {
+            // 如果宿主程序没传 mayor 对应的 player 详情，则不做 town 警告
+            return warnings;
+        }
+
+        QJsonObject mayorPlayer = extras.value("townMayorPlayer").toObject();
+        if (!mayorPlayer.contains("timestamps") || !mayorPlayer.value("timestamps").isObject()) {
+            return warnings;
+        }
+
+        QJsonObject timestamps = mayorPlayer.value("timestamps").toObject();
+        if (!timestamps.contains("lastOnline") || !timestamps.value("lastOnline").isDouble()) {
+            return warnings;
+        }
+
+        qint64 lastOnlineMs = static_cast<qint64>(timestamps.value("lastOnline").toDouble());
+        qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
+        qint64 days = (nowMs - lastOnlineMs) / (1000LL * 60 * 60 * 24);
+
+        if (days >= thresholdDays) {
             QJsonObject w;
             w["severity"] = "critical";
-            w["title"] = "Nation inactive members";
-            w["message"] = QString("%1 players in this nation have been offline for >= %2 days.")
-                .arg(expiredIds.size())
+            w["title"] = "Town mayor inactive";
+            w["message"] = QString("%1 mayor %2 has been offline for %3 days (threshold: %4).")
+                .arg(townName)
+                .arg(mayorName)
+                .arg(days)
                 .arg(thresholdDays);
-            w["ids"] = expiredIds;
-            w["names"] = expiredNames;
+            w["targetId"] = mayorUuid;
+
+            QJsonArray names;
+            names.append(QString("%1 | %2 | offline %3 days")
+                .arg(townName)
+                .arg(mayorName)
+                .arg(days));
+            w["names"] = names;
+
             warnings.append(w);
         }
 
